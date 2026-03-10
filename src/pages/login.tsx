@@ -6,16 +6,32 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
+import { login  as loginUser } from "../api/authService";
+import { useAuth } from "../context/authContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    navigate("/");
+
+    try {
+      const response = await loginUser({
+        email: email,
+        password: password,
+      });
+
+      login(response.token);
+
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      alert("Login failed");
+    }
   }
 
   return (

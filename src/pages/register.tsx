@@ -7,40 +7,40 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 
+import { register } from "@/src/api/authService";
+import { useAuth } from "@/src/context/authContext";
+
+
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSubmit(e: React.FormEvent) {
+   e.preventDefault();
+
+  try {
+    const response = await register({
+      username: name,
+      email: email,
+      password: password,
+    });
+
+    // if backend returns token after register:
+    login(response.token);
+
     navigate("/");
+  } catch (err) {
+    console.error(err);
+    alert("Registration failed");
+  }
   }
 
   return (
     <div className="flex min-h-screen">
-      <div className="hidden flex-1 lg:flex relative overflow-hidden">
-        <img
-          src="/images/auth-hero.jpg"
-          alt="Financial dashboard illustration with charts and budget tracking"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-olive/60" />
-        <div className="relative z-10 flex flex-col items-center justify-end w-full pb-16 px-12">
-          <div className="text-center max-w-sm">
-            <h2 className="text-2xl font-bold text-white">
-              Start your financial journey
-            </h2>
-            <p className="mt-3 text-sm text-white/80 leading-relaxed">
-              Join thousands of users building better money habits with
-              BudgetTrack.
-            </p>
-          </div>
-        </div>
-      </div>
-
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 bg-background">
         <div className="w-full max-w-sm">
           <div className="mb-8">
@@ -129,6 +129,26 @@ export default function RegisterPage() {
               Sign in
             </Link>
           </p>
+        </div>
+      </div>
+
+      <div className="hidden flex-1 lg:flex relative overflow-hidden">
+        <img
+          src="/images/auth-hero.jpg"
+          alt="Financial dashboard illustration with charts and budget tracking"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-olive/60" />
+        <div className="relative z-10 flex flex-col items-center justify-end w-full pb-16 px-12">
+          <div className="text-center max-w-sm">
+            <h2 className="text-2xl font-bold text-white">
+              Start your financial journey
+            </h2>
+            <p className="mt-3 text-sm text-white/80 leading-relaxed">
+              Join thousands of users building better money habits with
+              BudgetTrack.
+            </p>
+          </div>
         </div>
       </div>
     </div>
