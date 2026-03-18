@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Globe, DollarSign, User, Save } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import {
@@ -18,12 +18,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
+import { getUserProfile } from "../api/userProfileService";
 
 export default function SettingsPage() {
-  const [language, setLanguage] = useState("en");
-  const [currency, setCurrency] = useState("USD");
-  const [name, setName] = useState("James Smith");
-  const [email, setEmail] = useState("james@example.com");
+  const [language, setLanguage] = useState("");
+  const [currency, setCurrency] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+ useEffect(() => {
+  getUserProfile().then((data) => {
+    setName(data.username);
+    setEmail(data.email);
+    setLanguage(data.language);
+    setCurrency(data.currency);
+  });
+}, []);
+
 
   return (
     <div className="flex flex-col gap-6">
@@ -91,8 +102,8 @@ export default function SettingsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="border-border bg-card text-card-foreground">
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="bs">Bosnian</SelectItem>
+                  <SelectItem value="En">En</SelectItem>
+                  <SelectItem value="Bs">Bs</SelectItem>
                 </SelectContent>
               </Select>
             </div>
