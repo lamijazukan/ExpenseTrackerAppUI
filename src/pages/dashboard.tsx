@@ -3,15 +3,8 @@ import { ExpenseChart } from "@/src/components/dashboard/expense-chart";
 import { RecentTransactions } from "@/src/components/dashboard/recent-transactions";
 import { AddTransactionDialog } from "@/src/components/add-transaction-dialog";
 
-import { useEffect } from "react";
 
 export default function DashboardPage() {
-  useEffect(() => {
-    fetch("http://localhost:8080/health")
-      .then((res) => res.text())
-      .then(console.log)
-      .catch(console.error);
-  }, []);
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

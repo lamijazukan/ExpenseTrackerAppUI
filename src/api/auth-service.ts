@@ -1,16 +1,6 @@
 
 import api from "./apiClient";
-
-interface RegisterData {
-  username: string;
-  email: string;
-  password: string;
-}
-
-interface LoginData {
-  email: string;
-  password: string;
-}
+import { LoginData, RegisterData } from "../types/auth-types";
 
 export const register = async (data: RegisterData) => {
   const response = await api.post("/auth/register", data);

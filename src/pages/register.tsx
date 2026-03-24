@@ -7,9 +7,8 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 
-import { register } from "@/src/api/authService";
+import { register } from "@/src/api/auth-service";
 import { useAuth } from "@/src/context/authContext";
-
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -20,23 +19,23 @@ export default function RegisterPage() {
   const { login } = useAuth();
 
   async function handleSubmit(e: React.FormEvent) {
-   e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await register({
-      username: name,
-      email: email,
-      password: password,
-    });
+    try {
+      const response = await register({
+        username: name,
+        email: email,
+        password: password,
+      });
 
-    // if backend returns token after register:
-    login(response.token);
+      // if backend returns token after register:
+      login(response.token);
 
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-    alert("Registration failed");
-  }
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      alert("Registration failed");
+    }
   }
 
   return (

@@ -6,7 +6,7 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
-import { login  as loginUser } from "../api/authService";
+import { login as loginUser } from "../api/auth-service";
 import { useAuth } from "../context/authContext";
 
 export default function LoginPage() {

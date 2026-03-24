@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
-import { getUserProfile } from "../api/userProfileService";
+import { getUserProfile } from "../api/userProfile-service";
 
 export default function SettingsPage() {
   const [language, setLanguage] = useState("");
